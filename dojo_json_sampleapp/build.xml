@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<!--
+    Doing an "ant war" produces the war file to be deployed in a servlet 
+    container such as Tomcat.
+-->
+<project name="dojo_json" default="war" basedir=".">
+
+  <target name="setup">
+    <property name="src.dir" value="java"/>
+    <property name="web.dir" value="web"/>
+    <property name="classes.dir" value="${web.dir}/WEB-INF/classes"/>
+    <mkdir dir="${classes.dir}"/>
+  </target>
+
+  <target name="clean" depends="setup" description="Delete compiled files">
+      <delete dir="${classes.dir}"/>
+      <delete file="${ant.project.name}.war"/>
+  </target>
+
+  <target name="compile" depends="setup" description="Compile source">
+    <javac srcdir="${src.dir}"
+           destdir="${classes.dir}"/>
+  </target>
+  
+  <target name="war" depends="compile" description="Generate war file">
+    <jar destfile="${ant.project.name}.war" basedir="${web.dir}"/>
+  </target>
+
+</project>

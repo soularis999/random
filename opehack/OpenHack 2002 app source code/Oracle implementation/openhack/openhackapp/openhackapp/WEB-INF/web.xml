@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE web-app
+	PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+	"http://java.sun.com/j2ee/dtds/web-app_2_3.dtd">
+
+<web-app>
+
+	<display-name>eXcellence Awards Web site (modified for Openhack 4)</display-name>
+
+	<description>The eWEEK eXcellence Awards Web site application (modified for Openhack 4)</description>
+
+	<context-param>
+		<param-name>dbDriver</param-name>
+		<param-value>COM.ibm.db2.jdbc.net.DB2Driver</param-value>
+	</context-param>
+	<context-param>
+		<param-name>dbServer</param-name>
+		<param-value>jdbc:db2://openhackdb:6789/openhackdb</param-value>
+	</context-param>
+	<context-param>
+		<param-name>dbLogin</param-name>
+		<param-value>exadmin</param-value>
+	</context-param>
+	<context-param>
+		<param-name>dbPassword</param-name>
+		<param-value>wHyw0u1DuWan7h1s</param-value>
+	</context-param>
+
+	<session-config>
+		<session-timeout>720</session-timeout>
+	</session-config>
+
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+	
+   <error-page>
+     <error-code>403</error-code>
+     <location>/error.html</location>     
+   </error-page>     
+   
+   <error-page>
+     <error-code>404</error-code>
+     <location>/error.html</location>     
+   </error-page>   
+   
+   <error-page>
+     <error-code>500</error-code>
+     <location>/error.html</location>     
+   </error-page>     	
+
+   <error-page>
+     <error-code>400</error-code>
+     <location>/error.html</location>     
+   </error-page>     	
+
+</web-app>

@@ -1,0 +1,40 @@
+#!/usr/bin/env python
+
+from pymongo import Connection
+from multiprocessing import pool
+
+class Holder:
+  def __init__(self):
+    self.__id = 0
+    self.__name = "test"
+
+  def get_name(self):
+    return self.__name
+
+  def set_name(self, name):
+    self.__name = name
+
+  def get_id(self):
+    return self.__id
+
+  def set_id(self, id):
+    self.__id = id
+    
+def insert(c):
+  for i in range(100):
+    holder = Holder()
+    holder.id = i
+    holder.name = "Test%s"%(i)
+    #c.save(holder)
+
+c = Connection()
+print c.database_names()
+
+d = Database(c, u"dtest")
+print d.collection_names()
+
+try:
+  insert(c)
+finally:
+  c.disconnect()
+

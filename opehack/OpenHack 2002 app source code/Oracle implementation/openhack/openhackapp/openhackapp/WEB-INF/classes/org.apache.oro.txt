@@ -1,0 +1,2 @@
+You need a copy of Apache's oro.text.regex class (for regular expressions).
+This can be downloaded from http://jakarta.apache.org/oro/.

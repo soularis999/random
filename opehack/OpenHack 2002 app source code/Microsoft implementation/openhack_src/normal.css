@@ -1,0 +1,140 @@
+/*
+light orange: #FFB600
+dark orange: #FF9200
+dark blue: #000055
+*/
+
+body, P, TR, TD
+	{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12pt;
+	color: #000055;
+	}
+TD.small
+	{
+	font-size: 10pt;
+	}
+TD.reverse
+	{
+	color: #000055;
+	background : #FF9200;
+	font-weight : bold;
+	text-align: center;
+}
+A
+	{
+	font-size: 12pt;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	color: #FF9200;
+}
+A.green
+	{
+	font-size: 14pt;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	color: Green;
+}
+A.red
+	{
+	font-size: 14pt;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	color: Red;
+}
+A.small
+	{
+	font-size: 10pt;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	color: #FF9200;
+	}
+A.hover
+	{
+	font-size: 12pt;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #FFB600;
+}
+h1
+	{
+	font-size: 20pt;
+	font-family: Arial, Helvetica, sans-serif;
+	font-style: small-caps;
+	color: #FF9200;
+	}
+h2
+	{
+	font-size: 18pt;
+	font-family: Arial, Helvetica, sans-serif;
+	font-style: small-caps;
+	color: #FF9200;
+	}
+h3
+	{
+	font-size: 16pt;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #FF9200;
+	}
+h4
+	{
+	font-size: 12pt;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #FF9200;
+	}
+span.asterisk
+	{
+	font-size: 16pt;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	}
+span.instructions
+	{
+	font-size: 8pt;
+	font-family: Arial, Helvetica, sans-serif;
+	font-style: italic;
+	}
+span.logintext
+	{
+	color: #FFFFFF;
+	font-weight: bold;
+	}
+P.body, LI, DD
+	{
+	font-size: 12pt;
+	font-family: Arial, Helvetica, sans-serif;
+	}
+P.small
+	{
+	font-size: 10pt;
+	font-family: Arial, Helvetica, sans-serif;
+	}
+P.errormessage
+	{
+	color: #FF0000;
+	font-size: 12pt;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	text-align: center;
+	}
+P.quotes
+	{
+	font-style: italic;
+	}
+P.textlinks
+	{
+	font-size: 8pt;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	}
+P.lastupdated
+	{
+	font-size: 10pt;
+	font-family: Arial, Helvetica, sans-serif;
+	font-style: italic;
+	}
+P.legalnotices
+	{
+	font-size: 8pt;
+	font-family: Arial, Helvetica, sans-serif;
+	font-style: italic;
+}

@@ -1,0 +1,51 @@
+﻿Installing assembly 'c:\fx\misc\erikols\openhack\bin\openhack.dll'.
+Affected parameters are:
+   assemblypath = c:\fx\misc\erikols\openhack\bin\openhack.dll
+   logfile = c:\fx\misc\erikols\openhack\bin\openhack.InstallLog
+Installing WMI Schema: Started
+Registering assembly: OpenHack_SN__Version_0.0
+Ensuring that namespace exists: root\MicrosoftWmiNet
+Ensuring that class exists: root\MicrosoftWmiNet:WMINET_Instrumentation
+Ensuring that class exists: CREATING root\MicrosoftWmiNet:WMINET_Instrumentation
+Ensuring that class exists: root\MicrosoftWmiNet:WMINET_InstrumentedNamespaces
+Ensuring that class exists: CREATING root\MicrosoftWmiNet:WMINET_InstrumentedNamespaces
+Ensuring that class exists: root\MicrosoftWmiNet:WMINET_Naming
+Ensuring that class exists: CREATING root\MicrosoftWmiNet:WMINET_Naming
+Ensuring that namespace exists: root\CIMV2\Applications\OpenHackApp
+Ensuring that class exists: root\CIMV2\Applications\OpenHackApp:WMINET_Instrumentation
+Ensuring that class exists: CREATING root\CIMV2\Applications\OpenHackApp:WMINET_Instrumentation
+Ensuring that class exists: root\CIMV2\Applications\OpenHackApp:WMINET_InstrumentedAssembly
+Ensuring that class exists: CREATING root\CIMV2\Applications\OpenHackApp:WMINET_InstrumentedAssembly
+Ensuring that class exists: root\CIMV2\Applications\OpenHackApp:MSFT_DecoupledProvider
+Ensuring that class exists: CREATING root\CIMV2\Applications\OpenHackApp:MSFT_DecoupledProvider
+Ensuring that class exists: root\CIMV2\Applications\OpenHackApp:WMINET_ManagedAssemblyProvider
+Ensuring that class exists: CREATING root\CIMV2\Applications\OpenHackApp:WMINET_ManagedAssemblyProvider
+Installing WMI Schema: Finished
+Creating EventLog source OpenHack in log Application...
+Creating performance counter category OpenHackApplication.
+Committing assembly 'c:\fx\misc\erikols\openhack\bin\openhack.dll'.
+Affected parameters are:
+   assemblypath = c:\fx\misc\erikols\openhack\bin\openhack.dll
+   logfile = c:\fx\misc\erikols\openhack\bin\openhack.InstallLog
+Installing assembly 'c:\fx\misc\erikols\openhack\bin\openhack.dll'.
+Affected parameters are:
+   assemblypath = c:\fx\misc\erikols\openhack\bin\openhack.dll
+   logfile = c:\fx\misc\erikols\openhack\bin\openhack.InstallLog
+Installing WMI Schema: Started
+Registering assembly: OpenHack_SN__Version_0.0
+Ensuring that namespace exists: root\MicrosoftWmiNet
+Ensuring that class exists: root\MicrosoftWmiNet:WMINET_Instrumentation
+Ensuring that class exists: root\MicrosoftWmiNet:WMINET_InstrumentedNamespaces
+Ensuring that class exists: root\MicrosoftWmiNet:WMINET_Naming
+Ensuring that namespace exists: root\CIMV2\Applications\OpenHackApp
+Ensuring that class exists: root\CIMV2\Applications\OpenHackApp:WMINET_Instrumentation
+Ensuring that class exists: root\CIMV2\Applications\OpenHackApp:WMINET_InstrumentedAssembly
+Ensuring that class exists: root\CIMV2\Applications\OpenHackApp:MSFT_DecoupledProvider
+Ensuring that class exists: root\CIMV2\Applications\OpenHackApp:WMINET_ManagedAssemblyProvider
+Installing WMI Schema: Finished
+Creating EventLog source OpenHack in log Application...
+Creating performance counter category OpenHackApplication.
+Committing assembly 'c:\fx\misc\erikols\openhack\bin\openhack.dll'.
+Affected parameters are:
+   assemblypath = c:\fx\misc\erikols\openhack\bin\openhack.dll
+   logfile = c:\fx\misc\erikols\openhack\bin\openhack.InstallLog

@@ -1,0 +1,4 @@
+A newer version of the cos20Nov2000.jar file we used can be downloaded from 
+http://www.servlets.com/cos/index.html. Please see the licensing terms there.
+
+-eWEEK
