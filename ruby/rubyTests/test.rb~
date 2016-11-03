@@ -1,0 +1,23 @@
+#! /usr/bin/ruby
+
+class Worker
+      
+      def initialize(name, length)
+      	  @name = name
+	  @length = length
+      end
+
+      def doWork()
+      	  print "doing work for #{@name}"
+	  if block_given!()
+	     return yield @length
+	  else
+	     return nil
+	  end
+      end
+end
+
+worker = Worker.new("test1", 10)
+worker.doWork() do |length|
+  print "Got length #{length}"
+end

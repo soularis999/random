@@ -1,0 +1,95 @@
+# LEVEL DEFINITION
+# ================
+#
+# BASIC FORMAT:
+# -------------
+#  A level is described as a 25x18 grid of tiles.  Each of the 18 rows
+#  are defined on a separate line using the following syntax:
+#
+#     Y  |ROW_DATA
+#
+#  In this syntax, "Y" is ignored but serves as a comment to easily 
+#  determine which row is currently being defined.  The "|" character
+#  is a mandatory delimiter to indicate where the row data begins.
+#  ROW_DATA represents a string of 0-25 characters describing
+#  each of the 25 tiles in the current row.
+#
+#  If less than 25 characters are specified in ROW_DATA, it is assumed
+#  those tiles are empty.  If more than 25 characters are specified,
+#  the extra characters are simply ignored.
+#
+#  If less than 18 rows are specified in the level file, it is assumed
+#  those rows are empty.  If more than 18 rows are specified.  The extra
+#  rows are simple ignored.
+#
+#  Lines beginning with '#' are treated as comments and are therefore
+#  ignored.
+#
+#  The following characters can be used to represent level entities:
+#     ' '   Empty Tile
+#     'G'   Grass Terrain
+#     'S'   Sticky Terrain
+#     'F'   Flying AI
+#     'W'   Walking AI
+#     'T'   Collectable Token
+#     'P'   Player
+#
+#  A level MUST include a player starting location (P) and at least
+#  one token (T).  If both of these requirements are not met, then
+#  a default level will be loaded instead.
+#
+#
+# BASIC FORMAT WITH AI DIRECTIONS:
+# --------------------------------
+#  When AI is defined in a level, ROW_DATA can include additional
+#  information to specify their initial travel direction using
+#  the following syntax:
+#
+#     Y  |ROW_DATA                 |AI_DATA
+#
+#  In this syntax, everything leading up to the second '|' is processed with
+#  exactly the same rules as described above in the BASIC FORMAT.  However,
+#  when the second '|' is detected, it assumes all subsequent data is
+#  directional information for the AI on the current row.
+#
+#  AI_DATA is represented as a sequence of numbers [0-3], each corresponding
+#  to AI defined on the current line:
+#     '0'   Left     (Counter-clockwise for Flying AI)
+#     '1'   Right    (Counter-clockwise for Flying AI)
+#     '2'   Up       (Counter-clockwise for Flying AI)
+#     '3'   Down     (Counter-clockwise for Flying AI)
+#     '4'   Left     (Clockwise for Flying AI)
+#     '5'   Right    (Clockwise for Flying AI)
+#     '6'   Up       (Clockwise for Flying AI)
+#     '7'   Down     (Clockwise for Flying AI)
+#
+#  If more directions are specified than AI defined on a given line, then
+#  extra directions are ignored.
+#
+#  If more directions are specified than AI defined in the entire level, then
+#  extra directions are ignored.
+#
+#==============================================================================
+# TITLE:  Corn Fields
+#
+#Y\X
+#  |1234567890123456789012345|AI_DATA
+#--|-------------------------|-------
+1  |G T G  G   G  G   G  G T |
+2  |G      G      G      GGGG|
+3  |G               T        |
+4  |G F        T          F  |
+5  |G        F      F        |
+5  |G T    G      G      G   |
+6  |GGGGG  GG  G  GG  GT G   |
+7  | W     G   G  G   G  G   |
+8  |GGGGG  GT  G  G   G  G   |
+9  |  W    G F G  G T G  G T |
+10 |GGGGG  G   G  G   G  G   |
+11 |W      G   G TG   G  G   |
+12 |GGGGG  G   G  G   G  G   |
+14 |   W   G T G  G T G  G T |
+15 |GGGGG  G   G  G   G TG   |
+16 |    G  G   G  G   G  G   |
+17 | P  G      G T    G      |
+18 |GGGGG F    G  F   G F    |

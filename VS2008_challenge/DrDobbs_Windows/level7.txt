@@ -1,0 +1,90 @@
+# LEVEL DEFINITION
+# ================
+#
+# BASIC FORMAT:
+# -------------
+#  A level is described as a 25x18 grid of tiles.  Each of the 18 rows
+#  are defined on a separate line using the following syntax:
+#
+#     Y  |ROW_DATA
+#
+#  In this syntax, "Y" is ignored but serves as a comment to easily 
+#  determine which row is currently being defined.  The "|" character
+#  is a mandatory delimiter to indicate where the row data begins.
+#  ROW_DATA represents a string of 0-25 characters describing
+#  each of the 25 tiles in the current row.
+#
+#  If less than 25 characters are specified in ROW_DATA, it is assumed
+#  those tiles are empty.  If more than 25 characters are specified,
+#  the extra characters are simply ignored.
+#
+#  If less than 18 rows are specified in the level file, it is assumed
+#  those rows are empty.  If more than 18 rows are specified.  The extra
+#  rows are simple ignored.
+#
+#  Lines beginning with '#' are treated as comments and are therefore
+#  ignored.
+#
+#  The following characters can be used to represent level entities:
+#     ' '   Empty Tile
+#     'G'   Grass Terrain
+#     'S'   Sticky Terrain
+#     'F'   Flying AI
+#     'W'   Walking AI
+#     'T'   Collectable Token
+#     'P'   Player
+#
+#  A level MUST include a player starting location (P) and at least
+#  one token (T).  If both of these requirements are not met, then
+#  a default level will be loaded instead.
+#
+#
+# BASIC FORMAT WITH AI DIRECTIONS:
+# --------------------------------
+#  When AI is defined in a level, ROW_DATA can include additional
+#  information to specify their initial travel direction using
+#  the following syntax:
+#
+#     Y  |ROW_DATA                 |AI_DATA
+#
+#  In this syntax, everything leading up to the second '|' is processed with
+#  exactly the same rules as described above in the BASIC FORMAT.  However,
+#  when the second '|' is detected, it assumes all subsequent data is
+#  directional information for the AI on the current row.
+#
+#  AI_DATA is represented as a sequence of numbers [0-3], each corresponding
+#  to AI defined on the current line:
+#     '0'   Left     (DIR_LEFT from global.h)
+#     '1'   Right    (DIR_RIGHT from global.h)
+#     '2'   Up       (DIR_UP from global.h)
+#     '3'   Down     (DIR_DOWN from global.h)
+#
+#  If more directions are specified than AI defined on a given line, then
+#  extra directions are ignored.
+#
+#  If more directions are specified than AI defined in the entire level, then
+#  extra directions are ignored.
+#
+#==============================================================================
+#
+#Y\X
+#  |1234567890123456789012345|AI_DATA
+#--|-------------------------|
+1  |   GGGGGGGGGGGGGGGGGGG   |
+2  |   G  T  G  T  G  T  G   |
+3  |   G     G     G     G   |
+4  |      F           F      |26
+5  |                         |
+6  |                         |
+7  |                         |
+8  |            F            |
+9  |   G     G     G     G   |
+10 |   G T T G  T  G T T G   |
+11 |   GGGGGGGGGGGGGGGGGGG   |
+12 |                         |
+13 |                         |
+14 |                        P|
+15 |GG                     GG|
+16 |                         |
+17 |T    TW   TGGGT   WT    T|01
+18 |SSSGGGGGSSSSSSSSSGGGGGSSS|

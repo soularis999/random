@@ -1,0 +1,7 @@
+abcdefghigklmnopqrstuvwxyz
+1234567890
+ab ab ab ab ab
+cd cd cd cd
+ef ef ef
+gh gh
+ij
