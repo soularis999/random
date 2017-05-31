@@ -1,0 +1,4 @@
+-- usefull command to get folders greater than 10K
+du -S / | awk '{if($1 > 10000) { printf "%i:%s\r\n",$1,$2 }}'
+
+
