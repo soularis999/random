@@ -1,0 +1,48 @@
+[user]
+        email = dmitriy@khomitskiy.com
+        name = Dmitriy Khomitskiy
+[core]
+        autocrlf = input
+[alias]
+	# Commits in short form
+	logp = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
+	# commits in short form with file names
+	logf = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
+	# with dates for commit 
+	logd = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative
+
+	# diff till the commit
+	df  = "!f() { git diff "$1"^.."$1"; }; f"
+	# diff of just file names
+	dff  = "!f() { git diff --name-only "$1"^.."$1"; }; f"
+	# list of commits till
+	lc  = "!f() { git lg "$1"^.."$1"; }; f"
+
+	# status
+	ls = status -s
+	# commit
+	cin = commit
+	# checkout
+	cout = checkout
+	# checkout
+	coutf = "!f() { git checkout "$1" -- "$2"; }; f"
+	# branch
+	br = branch 
+	# rebase
+	reb = rebase
+	# fetch
+	fe = fetch
+
+	# stash list
+	sl = stash list
+	# stash apply
+	sp = stash apply
+	# stash apply
+	sd = stash drop
+	# save
+	sv = stash save
+	
+	# reset soft
+	re-soft-last = reset --soft HEAD~1
+	re-hard = reset --hard
+
