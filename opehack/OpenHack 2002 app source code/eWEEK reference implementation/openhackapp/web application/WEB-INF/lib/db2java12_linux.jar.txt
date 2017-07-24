@@ -1,5 +1,0 @@
-You need the DB2 Java client library, db2java12_linux.jar, in place of this file.
-
-We don't have rights to redistribute it.
-
--eWEEK

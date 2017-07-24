@@ -1,1 +1,0 @@
-Doing an "ant war" produces the war file to be deployed in a servlet container such as Tomcat.
