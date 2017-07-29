@@ -6,7 +6,7 @@ numPosts=1
 
 [SRC:CLR]
 url=https://www.sourceclear.com/blog/index.xml
-numPosts=1
+numPosts=2
 
 [zenefits]
 url=https://engineering.zenefits.com/posts/feed/
@@ -106,6 +106,42 @@ numPosts=1
 
 [lyft]
 url=https://eng.lyft.com/feed
+numPosts=1
+
+[chenel9]
+url=https://s.ch9.ms/Feeds/RSS
+numPosts=1
+
+[msdn tools]
+url=http://sxp.microsoft.com/feeds/3.0/ServerTools/ServerToolsTopPosts
+numPosts=1
+
+[stackoverflow]
+url=https://stackoverflow.blog/feed/
+numPosts=1
+
+[signal vs noice]
+url=https://m.signalvnoise.com/feed/
+numPosts=1
+
+[martin fowler]
+url=https://martinfowler.com/feed.atom
+numPosts=1
+
+[Code Better]
+url=http://feeds.feedburner.com/CodeBetter
+numPosts=1
+
+[hanselman]
+url=http://feeds.hanselman.com/scotthanselman
+numPosts=1
+
+[steve yegge]
+url=http://steve-yegge.blogspot.com/atom.xml
+numPosts=1
+
+[scott berkun]
+url=http://scottberkun.com/feed/
 numPosts=1
 
 
