@@ -112,6 +112,26 @@ numPosts=1
 url=https://s.ch9.ms/Feeds/RSS
 numPosts=1
 
+[windows azure]
+url=https://azure.microsoft.com/en-us/blog/feed/
+numPosts=1
+
+[aws blog]
+url=http://feeds.feedburner.com/AmazonWebServicesBlog
+numPosts=1
+
+[google cloud]
+url=http://feeds.feedburner.com/ClPlBl
+numPosts=1
+
+[sql server blog]
+url=https://blogs.technet.microsoft.com/cloudplatform/rssfeeds/dataplatform
+numPosts=1
+
+[microsoft dev tools]
+url=https://blogs.technet.microsoft.com/cloudplatform/rssfeeds/devblogs
+numPosts=1
+
 [stackoverflow]
 url=https://stackoverflow.blog/feed/
 numPosts=1
@@ -140,4 +160,27 @@ numPosts=1
 url=http://scottberkun.com/feed/
 numPosts=1
 
+[linux programming]
+url=http://www.linuxprogrammingblog.com/rss.xml
+numPosts=1
+
+[oma photo blog]
+url=http://omexperience.wordpress.com/feed/
+numPosts=1
+
+[java specialists]
+url=http://www.javaspecialists.eu/archive/tjsn.rss
+numPosts=1
+
+[shpilenok photo]
+url=http://shpilenok.livejournal.com/data/rss
+numPosts=1
+
+[embeded]
+url=http://www.embedded.com/rss/contentgroup/27
+numPosts=1
+
+[old new thing msdn blog]
+url=https://blogs.msdn.microsoft.com/oldnewthing/feed
+numPosts=1
 
