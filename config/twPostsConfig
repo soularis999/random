@@ -184,3 +184,39 @@ numPosts=1
 url=https://blogs.msdn.microsoft.com/oldnewthing/feed
 numPosts=1
 
+[tjholowaychuk]
+url=https://medium.com/feed/@tjholowaychuk
+numPosts=1
+
+[winterbe]
+url=http://feeds.feedburner.com/winterbe
+numPosts=1
+
+[conversant]
+url=http://engineering.conversantmedia.com/feed
+numPosts=1
+
+[braintree]
+url=https://www.braintreepayments.com/blog/rss/
+numPosts=1
+
+[NY times]
+url=https://open.nytimes.com/feed
+numPosts=1
+
+[ScyllaDB]
+url=http://www.scylladb.com/developers-blog/feed/
+numPosts=1
+
+[Civis]
+url=https://www.civisanalytics.com/blog/feed/
+numPosts=1
+
+[AWS startup collection]
+url=https://medium.com/feed/aws-activate-startup-blog/
+numPosts=1
+
+[AWS startups]
+url=http://feeds.feedburner.com/AwsStartupsBlog
+numPosts=1
+
