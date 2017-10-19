@@ -15,26 +15,55 @@ public class SimpleReadWriteClient {
         channel = SocketChannel.open(new InetSocketAddress(InetAddress.getLoopbackAddress(), 9999));
         channel.configureBlocking(true);
 
-        System.out.println("writing");
-        write();
-        System.out.println("reading");
-        read();
-        Thread.sleep(200);
-        System.out.println("writing");
-        write();
-        System.out.println("reading");
-        read();
+        outer: for (int i = 0; i < 5; i++) {
+            System.out.println("writing");
+            write();
+            System.out.println("reading");
+
+            int total = 0;
+            while (true) {
+                int read = read();
+                if (-1 == read) {
+                    break outer;
+                }
+                total += read;
+                if (total >= 512 * 1024) {
+                    break;
+                }
+            }
+
+            Thread.sleep(200);
+            System.out.println("writing");
+            write();
+            System.out.println("reading");
+
+            total = 0;
+            while (true) {
+                int read = read();
+                if (-1 == read) {
+                    break outer;
+                }
+                if (total + read >= 512 * 1024) {
+                    break;
+                }
+            }
+        }
 
         channel.close();
     }
 
-    private static void read() throws IOException {
+    private static int read() throws IOException {
         byteBuffer.clear();
-        int count = 0;
+        int total = 0;
         while (byteBuffer.remaining() > 0) {
-            count += channel.read(byteBuffer);
-            System.out.println("read: " + count);
+            int read = channel.read(byteBuffer);
+            if (-1 == read) {
+                return -1;
+            }
+            System.out.println("read: " + read);
+            total += read;
         }
+        return total;
     }
 
     private static void write() throws IOException {

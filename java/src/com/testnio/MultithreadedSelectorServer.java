@@ -4,21 +4,27 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
-import java.nio.channels.SelectionKey;
-import java.nio.channels.Selector;
-import java.nio.channels.ServerSocketChannel;
-import java.nio.channels.SocketChannel;
+import java.nio.channels.*;
 import java.util.Iterator;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
-public class SimpleReadWriteServer {
+public class MultithreadedSelectorServer implements Runnable {
+
     Selector selector;
     ServerSocketChannel channel;
 
     int holderCount = 0;
     int numKeys = 0;
 
+    Executor executor;
+
     public static void main(String[] str) throws IOException {
-        new SimpleReadWriteServer().start();
+        new MultithreadedSelectorServer().start();
+    }
+
+    public MultithreadedSelectorServer() {
+        executor = Executors.newFixedThreadPool(2);
     }
 
     private void start() throws IOException {
@@ -27,8 +33,14 @@ public class SimpleReadWriteServer {
 
         channel.configureBlocking(false);
         channel.bind(new InetSocketAddress(InetAddress.getLoopbackAddress(), 9999));
+
         channel.register(selector, SelectionKey.OP_ACCEPT);
 
+        executor.execute(this);
+        executor.execute(this);
+    }
+
+    public void run() {
         for (; ; ) {
             try {
                 if (numKeys != selector.keys().size()) {
@@ -73,14 +85,12 @@ public class SimpleReadWriteServer {
 
     private void onWrite(SelectionKey key) throws IOException {
         SocketChannel client = (SocketChannel) key.channel();
-        Holder holder = (Holder) key.attachment();
+        MultithreadedSelectorServer.Holder holder = (MultithreadedSelectorServer.Holder) key.attachment();
 
         int result = client.write(holder.writeBuffer);
         printKey("Num bytes written:" + result, key);
         if (holder.writeBuffer.remaining() > 0) {
             holder.writeBuffer.compact();
-            holder.writeBuffer.flip();
-            key.interestOps(key.interestOps() | SelectionKey.OP_WRITE);
         } else {
             holder.writeBuffer.clear();
             key.interestOps(key.interestOps() & ~SelectionKey.OP_WRITE);
@@ -89,7 +99,7 @@ public class SimpleReadWriteServer {
 
     private void readKey(SelectionKey key) throws IOException {
         SocketChannel client = (SocketChannel) key.channel();
-        Holder holder = (Holder) key.attachment();
+        MultithreadedSelectorServer.Holder holder = (MultithreadedSelectorServer.Holder) key.attachment();
 
         int result = client.read(holder.readBuffer);
         printKey("Num bytes read:" + result, key);
@@ -107,13 +117,22 @@ public class SimpleReadWriteServer {
 
     private void doOnWrite(SelectionKey key) throws IOException {
         SocketChannel client = (SocketChannel) key.channel();
-        Holder holder = (Holder) key.attachment();
+        MultithreadedSelectorServer.Holder holder = (MultithreadedSelectorServer.Holder) key.attachment();
 
         for (int i = 0; i < 512 * 1024 / 4; i++) {
             holder.writeBuffer.putInt(i);
         }
         holder.writeBuffer.flip();
-        onWrite(key);
+
+        int result = client.write(holder.writeBuffer);
+        printKey("Num bytes written:" + result, key);
+
+        if (holder.writeBuffer.position() > 0) {
+            holder.writeBuffer.compact();
+            key.interestOps(key.interestOps() | SelectionKey.OP_WRITE);
+        } else {
+            holder.writeBuffer.clear();
+        }
     }
 
     private void acceptKey(SelectionKey key) throws IOException {
@@ -121,7 +140,7 @@ public class SimpleReadWriteServer {
         client.configureBlocking(false);
         SelectionKey readKey = client.register(selector, SelectionKey.OP_READ);
 
-        Holder holder = new Holder();
+        MultithreadedSelectorServer.Holder holder = new MultithreadedSelectorServer.Holder();
         holder.id = ++holderCount;
         readKey.attach(holder);
     }
