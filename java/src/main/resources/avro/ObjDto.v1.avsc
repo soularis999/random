@@ -1,0 +1,11 @@
+{"namespace": "com.testavro",
+  "type": "record",
+  "name": "ObjDto",
+  "fields": [
+    {"name": "id", "type": "string"},
+    {"name": "author", "type": "string", "default": ""},
+    {"name": "text", "type": "string", "default": ""},
+    {"name": "hashtags", "type": ["null",{"type": "array", "items": "string"}], "default": null},
+    {"name": "timestamp", "type": "long"}
+  ]
+}

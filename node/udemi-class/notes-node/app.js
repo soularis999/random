@@ -14,7 +14,6 @@ const notes = require('./notes.js');
 var result = notes.add(10,5);
 console.log("10 + 5 = ", result);
 
-
 const _ = require('lodash');
 
 console.log("Is true a string", _.isString(true));
