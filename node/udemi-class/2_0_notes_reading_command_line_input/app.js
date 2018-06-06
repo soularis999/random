@@ -18,5 +18,5 @@ switch(command) {
     console.log("adding");
     break;
   default:
-    console.log("ERRROR");
+    console.log("ERROR");
 }

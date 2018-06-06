@@ -3,3 +3,6 @@
 .iml
 .impl
 .class
+build/
+out/
+node_modules/

@@ -6,6 +6,14 @@
         </encoder>
     </appender>
 
+    <appender name="AVRO" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="com.testavro.AvroFileEncoder"/>
+    </appender>
+
+
+    <logger name="avro_logger" level="INFO" additivity="false">
+        <appender-ref ref="AVRO" />
+    </logger>
 
     <logger name="org.apache.kafka" level="INFO"/>
     <logger name="org.apache.kafka.common.metrics" level="INFO"/>
