@@ -2,15 +2,6 @@
  * To run node app.js <task: list, read, add>
  * for add use params --title "title" --body "body"
  *********************/
-
-var printUsage = () => {
-  console.log("node app.js <command> <params> \n" +
-  "where param: list|read|add|remove \n" +
-  "for list: no params are required \n" +
-  "for read: --title <title> is required \n" +
-  "for add: --title <title> --body <body> is required \n" +
-  "for remove: --title <title> is required \n")
-}
 const fs = require('fs');
 const _ = require('lodash');
 const yargs = require('yargs');
@@ -20,6 +11,13 @@ const argv = yargs
   .command('add', 'add note', {
     title: {describe: "title of the note", demand: true, alias: 't'},
     body: {describe: "body of the note", demand: true, alias: 'b'},
+  })
+  .command('remove', 'remove note', {
+    title: {describe: "title of the note", demand: true, alias: 't'},
+  })
+  .command('list', 'list note titles')
+  .command('read', 'read note', {
+    title: {describe: "title of the note", demand: true, alias: 't'},
   })
   .help()
   .argv;

@@ -1,0 +1,44 @@
+* to install node
+
+brew install node
+
+* To run any node application do
+
+node app.js
+- this will allow automatic reloading instead of rerunning
+nodemon app.js 
+-- to install nodemon run npm install -g nodemon
+
+* To install package
+npm install <package name>
+- To install all packages in packages.json
+npm install
+
+
+* interesting librearies
+
+lodash - has a lot of utility functions
+fs - file system lib
+yargs - allows to parse command line args
+
+
+* to add librearies in code
+const notes = require('./notes');
+
+* How to debug
+node inspect app.js
+
+help() - for help
+
+c - resume to next break point
+n - continue
+s - step into
+o - step out
+repl - to go into reple mode to be able to play with already loaded code
+
+Can use the chrome tools for debugging as well
+
+node --inspect-brk app.js
+in chrome opne chrome://inspect and select app
+F10 to step through
+can use nodemon instead of node to keep automatic reloading of files
