@@ -1,3 +1,4 @@
+
 [user]
         email = dmitriy@khomitskiy.com
         name = Dmitriy Khomitskiy
@@ -5,7 +6,7 @@
         autocrlf = input
 [alias]
 	# Commits in short form
-	logp = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
+	logp = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --graph --all
 	# commits in short form with file names
 	logf = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
 	# with dates for commit 
