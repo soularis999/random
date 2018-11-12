@@ -6,7 +6,9 @@
         autocrlf = input
 [alias]
 	# Commits in short form
-	logp = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --graph --all
+	logp = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --oneline
+	# Commits in short form - with graph
+	logpg = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --oneline --all --graph
 	# commits in short form with file names
 	logf = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
 	# with dates for commit 
@@ -33,6 +35,8 @@
 	reb = rebase
 	# fetch
 	fe = fetch
+	# clean
+	cl = clean -fd
 
 	# stash list
 	sl = stash list
@@ -46,4 +50,9 @@
 	# reset soft
 	re-soft-last = reset --soft HEAD~1
 	re-hard = reset --hard
+	
+	# merge
+	pm = "!f() { git push -v "origin" "$(git rev-parse --abbrev-ref HEAD)":master; }; f"
+	pb = "!f() { git push -v "origin" "$(git rev-parse --abbrev-ref HEAD)":"$1"; }; f"
+
 
