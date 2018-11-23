@@ -13,7 +13,11 @@
 (setq inhibit-startup-message t
       inhibit-startup-echo-area-message t)
 
-(global-linum-mode 1)
+(require 'linum)
+(global-linum-mode t)
+;; use customized linum-format: add a addition space after the line number                                                                                                                                                                                                                                                                                       
+(setq linum-format (lambda (line) (propertize (format (let ((w (length (number-to-string (count-lines (point-min) (point-max)))))) (concat "%"
+                                                                                                                                            (number-to-string w) "d ")) line) 'face 'linum)))
 
 ;; node js
 (require 'js2-mode)
