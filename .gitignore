@@ -8,3 +8,4 @@ out/
 node_modules/
 *~
 .vertx/
+package-lock.json
