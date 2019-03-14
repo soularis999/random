@@ -1,6 +1,6 @@
 'use strict';
 
-var {Todo} = require('./db/mongoose');
+var {doDelete, doGet, doGetAll, doSave} = require('./db/mongoose');
 var {ObjectID} = require('mongodb');
 var express = require('express');
 var bp = require('body-parser');
@@ -11,10 +11,8 @@ app.use(bp.json());
 
 // POST - save todo
 app.post('/todos', (req, res, done) => {
-    var todo = new Todo({
-	text: req.body.text
-    });
-    doSave(todo,
+    let text = req.body.text;
+    doSave(text,
 	   (response) => {
 	       res.send(response);
 	       done();
@@ -84,50 +82,5 @@ app.delete('/todos/:id', (req, res, done) => {
 	    done();
 	});
 });
-
-function doResponse(response, done) {
-}
-
-async function doSave(todo, callback, error) {
-    try {
-	var result = await todo.save();
-	console.log(`Saved todo ${todo}`);
-	callback(result);
-    } catch (e) {
-	console.log(`Error in save todo ${todo}`, e);
-	error(e);
-    }
-}
-
-async function doGetAll(callback, error) {
-    try {
-	var result = await Todo.find();
-	callback(result);
-    } catch(e) {
-	console.log("Error in getting todo", e);
-	error(e);
-    }
-}
-
-async function doGet(id, callback, error) {
-    try {
-	var result = await Todo.findById(id);
-	callback(result);
-    } catch(e) {
-	console.log("Error in getting todo", e);
-	error(e);
-    }
-}
-
-async function doDelete(id, callback, error) {
-    try {
-	var result = await Todo.findByIdAndRemove(id);
-	callback(result);
-    } catch(e) {
-	console.log("Error in deleting todo", e);
-	error(e);
-    }
-}
-    
 
 module.exports = app;
