@@ -1,3 +1,6 @@
+(setq user-full-name "Dmitriy Khomitskiy"
+      user-mail-address "dmitriy@khomitskiy.com")
+
 ;; These functions are useful. Activate them.
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
