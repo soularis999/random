@@ -8,4 +8,5 @@ out/
 node_modules/
 *~
 .vertx/
+.gradle/
 package-lock.json

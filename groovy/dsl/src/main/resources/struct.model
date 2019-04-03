@@ -1,0 +1,3 @@
+struct {
+  structure: [Quantity[0..1], Symbol, Expiration, Price[0..1]]
+}
