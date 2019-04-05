@@ -18,6 +18,7 @@ const userSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
+        unique: true,
         trim: true,
         lowercase: true,
         validate(value) {
@@ -36,6 +37,8 @@ const userSchema = new mongoose.Schema({
 /*
 Middleware to intercept the data on save
 can also do validate, remove
+
+has to be a function so this could be bound to user
 */
 userSchema.pre('save', async function (next) {
     const user = this;
@@ -49,7 +52,30 @@ userSchema.pre('save', async function (next) {
         console.log(`Error setting the hash password on user ${user} ${e}`);
         throw e;
     }
-})
+});
+
+/*
+The method that can be added right to schema
+*/
+userSchema.statics.findByCredentials = async (emailVal, passwordVal) => {
+    try {
+        const user = await User.findOne({ email: emailVal });
+        if (!user) {
+            throw new Error('Unable to login');
+        }
+
+        const isMatch = await bcrypt.compare(passwordVal, user.password);
+
+        if (!isMatch) {
+            throw new Error('Unable to login');
+        }
+
+        return user;
+    } catch (e) {
+        throw new Error("Critical error " + e);
+    }
+};
+
 const User = mongoose.model('User', userSchema)
 
 
@@ -65,6 +91,16 @@ async function doSave(name, password, email) {
         return result
     } catch (e) {
         console.log(`Error in save user ${user.name}`, e);
+        throw e;
+    }
+}
+
+async function findByCredentials(email, password) {
+    try {
+        const user = await User.findByCredentials(email, password);
+        return user;
+    } catch (e) {
+        console.log(`Authentication error ${email}`, e);
         throw e;
     }
 }
@@ -128,6 +164,7 @@ async function doDelete(id) {
 }
 
 
-module.exports = Object.assign({}, { doDelete, doGet, doGetAll, doSave, doUpdate });
+module.exports = Object.assign({}, { 
+    doDelete, doGet, doGetAll, doSave, doUpdate, findByCredentials});
 
 

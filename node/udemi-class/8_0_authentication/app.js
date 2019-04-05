@@ -3,7 +3,7 @@
 var express = require('express');
 var bp = require('body-parser');
 var { ObjectID } = require('mongodb');
-var { doDelete, doGet, doGetAll, doSave, doUpdate } = require('./User');
+var { doDelete, doGet, doGetAll, doSave, doUpdate, findByCredentials} = require('./User');
 
 var app = express();
 
@@ -24,6 +24,18 @@ app.post('/user', async (req, res) => {
 		res.status(400).send(e);
 	}
 });
+
+app.post('/user/login', async (req, res) => {
+	let email = req.body.email;
+	let password = req.body.password;
+
+	try {
+		const user = await findByCredentials(email, password);
+		res.send(user);
+	} catch (e) {
+		res.status(400).send(e);
+	}
+})
 
 app.get('/user', async (req, res) => {
 	try {
