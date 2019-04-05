@@ -1,10 +1,13 @@
 'use strict';
 
+const bcrypt = require('bcryptjs');
 const mongoose = require("mongoose")
 const validator = require("validator")
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/TodoApp');
+
+const allowedUpdated = ["name", "email", "password"];
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -30,9 +33,22 @@ const userSchema = new mongoose.Schema({
     }
 })
 
-userSchema.pre('save', async function(next) {
-    console.log(`saving ${this}`)
-    next()
+/*
+Middleware to intercept the data on save
+can also do validate, remove
+*/
+userSchema.pre('save', async function (next) {
+    const user = this;
+    try {
+        if (user.isModified('password')) {
+            const result = await bcrypt.hash(user.password, 8);
+            user.password = result;
+        }
+        next()
+    } catch (e) {
+        console.log(`Error setting the hash password on user ${user} ${e}`);
+        throw e;
+    }
 })
 const User = mongoose.model('User', userSchema)
 
@@ -53,19 +69,25 @@ async function doSave(name, password, email) {
     }
 }
 
-async function doUpdate(id, name=null, password=null, email=null) {
+/*
+given id and allowed data to be updated the method will update values that are provided and
+will return the new, updated structure
+Allowed fields: ['name', 'email', 'password']
+ */
+async function doUpdate(id, data) {
+    const updates = Object.keys(data);
+    const isAvailableUpdates = updates.every((update) => allowedUpdated.includes(update));
+
+    if (!isAvailableUpdates) {
+        throw new Error(`Some fields are not allowed to be updated ${data}`);
+    }
+
     try {
-        var user = User.findById(id);
-        if(name) {
-            user.name = name;
-        }
-        if(password) {
-            user.password = password
-        }
-        if(email) {
-            user.email = email
-        }
-        
+        const user = await doGet(id);
+        updates.forEach((update) => {
+            user[update] = data[update];
+        });
+
         var result = await user.save();
         console.log(`Saved user ${user.name}`);
         return result
@@ -87,7 +109,8 @@ async function doGetAll() {
 
 async function doGet(id) {
     try {
-        return await User.findById(id);
+        var result = await User.findById(id);
+        return result;
     } catch (e) {
         console.log("Error in getting user", e);
         throw e;
@@ -96,7 +119,8 @@ async function doGet(id) {
 
 async function doDelete(id) {
     try {
-        return await User.findByIdAndRemove(id);
+        var result = await User.findByIdAndRemove(id);
+        return result;
     } catch (e) {
         console.log("Error in deleting user", e);
         throw e;
@@ -104,6 +128,6 @@ async function doDelete(id) {
 }
 
 
-module.exports = Object.assign({}, { doDelete, doGet, doGetAll, doSave });
+module.exports = Object.assign({}, { doDelete, doGet, doGetAll, doSave, doUpdate });
 
 

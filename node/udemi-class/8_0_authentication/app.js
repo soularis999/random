@@ -43,7 +43,7 @@ app.get('/user/:id', async (req, res) => {
 	}
 
 	try {
-		let response = doGet(id);
+		let response = await doGet(id);
 		if (!response) {
 			res.status(404).send();
 		} else {
@@ -55,21 +55,15 @@ app.get('/user/:id', async (req, res) => {
 });
 
 app.patch('/user/:id', async (req, res) => {
-	let updateKeys = Object.keys(req.body);
-	let allowed = ["name", "email", "password"]
-	let isValid = updateKeys.every(key => allowed.includes(key))
+	
 	let id = req.params.id;
-
-	if (!ObjectID.isValid(id) || !isValid) {
+	if (!ObjectID.isValid(id)) {
 		res.status(404).send();
 		return;
 	}
 
 	try {
-		let response = doUpdate(id, 
-			name=req.body["name"], 
-			password=req.body["password"], 
-			email=req.body["email"]);
+		let response = await doUpdate(id, req.body);
 		if (!response) {
 			res.status(404).send();
 		} else {
@@ -89,7 +83,7 @@ app.delete('/user/:id', async (req, res, done) => {
 		return;
 	}
 	try {
-		let response = doDelete(id)
+		let response = await doDelete(id)
 		if (!response) {
 			res.status(404).send();
 		} else {
