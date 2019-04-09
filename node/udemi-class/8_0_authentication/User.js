@@ -31,7 +31,13 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true
-    }
+    },
+    tokens: [{
+        token: {
+            type: String,
+            required: true
+        }
+    }]
 })
 
 /*
@@ -90,7 +96,6 @@ async function doSave(name, password, email) {
         console.log(`Saved user ${user.name}`);
         return result
     } catch (e) {
-        console.log(`Error in save user ${user.name}`, e);
         throw e;
     }
 }
@@ -100,7 +105,15 @@ async function findByCredentials(email, password) {
         const user = await User.findByCredentials(email, password);
         return user;
     } catch (e) {
-        console.log(`Authentication error ${email}`, e);
+        throw e;
+    }
+}
+
+async function doSaveToken(user, token) {
+    try {
+        user.tokens.push({token});
+        user.save();
+    } catch (e) {
         throw e;
     }
 }
@@ -128,7 +141,6 @@ async function doUpdate(id, data) {
         console.log(`Saved user ${user.name}`);
         return result
     } catch (e) {
-        console.log(`Error in save user ${user.name}`, e);
         throw e;
     }
 }
@@ -138,7 +150,6 @@ async function doGetAll() {
         var result = await User.find();
         return result;
     } catch (e) {
-        console.log("Error in getting user", e);
         throw e;
     }
 }
@@ -148,7 +159,6 @@ async function doGet(id) {
         var result = await User.findById(id);
         return result;
     } catch (e) {
-        console.log("Error in getting user", e);
         throw e;
     }
 }
@@ -158,13 +168,12 @@ async function doDelete(id) {
         var result = await User.findByIdAndRemove(id);
         return result;
     } catch (e) {
-        console.log("Error in deleting user", e);
         throw e;
     }
 }
 
 
 module.exports = Object.assign({}, { 
-    doDelete, doGet, doGetAll, doSave, doUpdate, findByCredentials});
+    doDelete, doGet, doGetAll, doSave, doUpdate, findByCredentials, doSaveToken});
 
 

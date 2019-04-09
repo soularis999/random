@@ -2,13 +2,17 @@
 
 var express = require('express');
 var bp = require('body-parser');
+var jwt = require('jsonwebtoken');
 var { ObjectID } = require('mongodb');
-var { doDelete, doGet, doGetAll, doSave, doUpdate, findByCredentials} = require('./User');
+var { doDelete, doGet, doGetAll, doSave, doUpdate, findByCredentials, doSaveToken} = require('./User');
 
 var app = express();
 
-app.use(bp.urlencoded({ extended: true }));
 app.use(bp.json());
+
+const signFunc = async (userId) => {
+	return jwt.sign({_id: userId}, "This is an awesome app");
+}
 
 // POST - save todo
 app.post('/user', async (req, res) => {
@@ -31,7 +35,10 @@ app.post('/user/login', async (req, res) => {
 
 	try {
 		const user = await findByCredentials(email, password);
-		res.send(user);
+		const token = await signFunc(user.id);
+		console.log(token)
+		await doSaveToken(user, token);
+		res.send({user, token});
 	} catch (e) {
 		res.status(400).send(e);
 	}
@@ -105,6 +112,8 @@ app.delete('/user/:id', async (req, res, done) => {
 		res.status(400).send(e);
 	}
 });
+
+
 
 
 module.exports = app;
