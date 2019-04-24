@@ -10,6 +10,7 @@ mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/TodoApp');
 
 const allowedUpdated = ["name", "email", "password"];
+const allowedNoteUpdated = ["name", "value"];
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -42,7 +43,19 @@ const userSchema = new mongoose.Schema({
             type: String,
             required: true
         }
+    }],
+    notes: [{
+        note_name: {
+            type: String,
+            required: true,
+            trim: true
+        },
+        note_text: {
+            type: String
+        }
     }]
+}, {
+    timestamps: true
 })
 
   /*
@@ -56,7 +69,6 @@ userSchema.pre('save', async function (next) {
     try {
         if (user.isModified('password')) {
             const result = await encrypt(user.password);
-            console.log(`Adding aftr password on ${user}`);
             user.password = result;
         }
         next();
@@ -65,6 +77,36 @@ userSchema.pre('save', async function (next) {
         throw e;
     }  
 });
+
+/*
+Init hook is the only sync hook in mongoose
+*/
+userSchema.post('init', (user) => {
+    try {
+        user.index_of_notes = {};
+        user.notes.forEach(note => {
+            user.index_of_notes[note._id] = note;
+        });
+    } catch (e) {
+        console.log(`Error formatting user ${user}`);
+        throw e;
+    } 
+});
+
+/*
+Exposed on user object - has to be function so that we could get this
+Method used by JSON.stringify before sending to client
+*/
+userSchema.methods.toJSON = function() {
+    const user = this;
+    const temp = user.toObject();
+
+    delete temp.tokens;
+    delete temp.password;
+    delete temp.__v;
+
+    return temp;
+}
 
 const User = mongoose.model('User', userSchema)
 
@@ -95,7 +137,7 @@ Allowed fields: ['name', 'email', 'password']
 async function doAdd(data) {
     validate(data);
     try {
-        var user = new User(data);
+        const user = new User(data);
         return await user.save();
     } catch (e) {
         throw e;
@@ -126,7 +168,6 @@ async function doUpdate(user, data) {
     }
 }
 
-
 async function doDelete(id) {
     try {
         return await User.findByIdAndRemove(id);
@@ -135,9 +176,67 @@ async function doDelete(id) {
     }
 }
 
+async function doAddNote(user, data) {
+    console.log(`HERE ${data}`);
+    validateNote(data);
+    try {
+        user.tasks.push({name: data.name, value: data.value});
+        const result = await user.save();
+        console.log(`IN DO ADD TASK ${user} : ${result}`);
+        return user;
+    } catch (e) {
+        throw e;
+    }
+}
+
+// async function doUpdateNote(user, id, data) {
+//     validateNote(data);
+//     try {
+//         const tasks = user.tasks.filter(task => task.id === id);
+//         if(!tasks || 1 != tasks.length()) {
+//             throw new Error('No such task');
+//         }
+
+//         updates.forEach((update) => {
+//             task[update] = data[update];
+//         });
+//         await user.save();
+//         return user;
+//     } catch (e) {
+//         throw e;
+//     }
+// }
+
+// async function doDeleteNote(user, id) {
+//     validateNote(data);
+//     try {
+//         const task = user.tasks.filter(task => task.id === id);
+//         if(!task) {
+//             throw new Error('No such task');
+//         }
+
+//         updates.forEach((update) => {
+//             task[update] = data[update];
+//         });
+//         await user.save();
+//         return user;
+//     } catch (e) {
+//         throw e;
+//     }
+// }
+
 function validate(data) {
     const updates = Object.keys(data);
     const isAvailableUpdates = updates.every((update) => allowedUpdated.includes(update));
+
+    if (!isAvailableUpdates) {
+        throw new Error(`Some fields are not allowed to be updated ${data}`);
+    }
+}
+
+function validateNote(data) {
+    const updates = Object.keys(data);
+    const isAvailableUpdates = updates.every((update) => allowedNoteUpdated.includes(update));
 
     if (!isAvailableUpdates) {
         throw new Error(`Some fields are not allowed to be updated ${data}`);
@@ -150,7 +249,8 @@ module.exports = Object.assign({}, {
     doGetByEmail,
     doAdd,
     doUpdate,
-    doDelete
+    doDelete,
+    doAddNote,
 });
 
 

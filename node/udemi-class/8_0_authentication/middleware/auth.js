@@ -15,11 +15,8 @@ The failure in authentication will result in 401 error returned back to client
 const authHook = async (req, resp, next) => {
     try {
         const token = req.header("Authorization").replace("Bearer ", "")
-        console.log(token);
         const decode = jwt.verify(token, "This is an awesome app");
-        console.log(decode);
         const user = await doGet(decode._id);
-        console.log(`User: ${user}`);
 
         if (!user || user.tokens.every(tk => tk.token !== token)) {
             throw new Error();
