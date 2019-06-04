@@ -10,7 +10,7 @@ mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/TodoApp');
 
 const allowedUpdated = ["name", "email", "password"];
-const allowedNoteUpdated = ["name", "value"];
+const allowedNoteUpdated = ["note_name", "note_text"];
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -52,6 +52,9 @@ const userSchema = new mongoose.Schema({
         },
         note_text: {
             type: String
+        },
+        completed: {
+            type: Boolean
         }
     }]
 }, {
@@ -177,53 +180,49 @@ async function doDelete(id) {
 }
 
 async function doAddNote(user, data) {
-    console.log(`HERE ${data}`);
     validateNote(data);
     try {
-        user.tasks.push({name: data.name, value: data.value});
+        user.notes.push({note_name: data.name, note_text: data.value});
+        console.log(`IN DO ADD TASK ${JSON.stringify(user)}`);
         const result = await user.save();
-        console.log(`IN DO ADD TASK ${user} : ${result}`);
+        return user;
+    } catch (e) {
+        console.log(e);
+        throw e;
+    }
+}
+
+async function doUpdateNote(user, id, data) {
+    console.log(data)
+    validateNote(data);
+    try {
+        const task = user.notes.find(note => note.id === id);
+        if(!task) {
+            throw new Error(`No such task ${id}`);
+        }
+
+        const updates = Object.keys(data);
+        updates.forEach((update) => {
+            task[update] = data[update];
+        });
+        await user.save();
         return user;
     } catch (e) {
         throw e;
     }
 }
 
-// async function doUpdateNote(user, id, data) {
-//     validateNote(data);
-//     try {
-//         const tasks = user.tasks.filter(task => task.id === id);
-//         if(!tasks || 1 != tasks.length()) {
-//             throw new Error('No such task');
-//         }
-
-//         updates.forEach((update) => {
-//             task[update] = data[update];
-//         });
-//         await user.save();
-//         return user;
-//     } catch (e) {
-//         throw e;
-//     }
-// }
-
-// async function doDeleteNote(user, id) {
-//     validateNote(data);
-//     try {
-//         const task = user.tasks.filter(task => task.id === id);
-//         if(!task) {
-//             throw new Error('No such task');
-//         }
-
-//         updates.forEach((update) => {
-//             task[update] = data[update];
-//         });
-//         await user.save();
-//         return user;
-//     } catch (e) {
-//         throw e;
-//     }
-// }
+async function doDeleteNote(user, id) {
+    try {
+        console.log(user)
+        user.notes = user.notes.filter(note => notei.id !== id);
+        console.log(user)
+        await user.save();
+        return user;
+    } catch (e) {
+        throw e;
+    }
+}
 
 function validate(data) {
     const updates = Object.keys(data);
@@ -251,6 +250,8 @@ module.exports = Object.assign({}, {
     doUpdate,
     doDelete,
     doAddNote,
+    doUpdateNote,
+    doDeleteNote
 });
 
 
