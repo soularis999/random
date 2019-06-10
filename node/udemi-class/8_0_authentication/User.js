@@ -54,7 +54,8 @@ const userSchema = new mongoose.Schema({
             type: String
         },
         completed: {
-            type: Boolean
+            type: Boolean,
+            default: false
         }
     }]
 }, {
@@ -182,8 +183,7 @@ async function doDelete(id) {
 async function doAddNote(user, data) {
     validateNote(data);
     try {
-        user.notes.push({note_name: data.name, note_text: data.value});
-        console.log(`IN DO ADD TASK ${JSON.stringify(user)}`);
+        user.notes.push(data);
         const result = await user.save();
         return user;
     } catch (e) {
@@ -196,7 +196,7 @@ async function doUpdateNote(user, id, data) {
     console.log(data)
     validateNote(data);
     try {
-        const task = user.notes.find(note => note.id === id);
+        const task = user.notes.find(note => note._id === id);
         if(!task) {
             throw new Error(`No such task ${id}`);
         }
@@ -215,8 +215,21 @@ async function doUpdateNote(user, id, data) {
 async function doDeleteNote(user, id) {
     try {
         console.log(user)
-        user.notes = user.notes.filter(note => notei.id !== id);
+        user.notes = user.notes.filter(note => note._id !== id);
         console.log(user)
+        await user.save();
+        return user;
+    } catch (e) {
+        throw e;
+    }
+}
+
+async function doCompleteNote(user, id) {
+    try {
+        const note = user.notes.find(note => note._id == id);
+        if(note) {
+            note.completed = true;
+        }
         await user.save();
         return user;
     } catch (e) {
@@ -229,7 +242,7 @@ function validate(data) {
     const isAvailableUpdates = updates.every((update) => allowedUpdated.includes(update));
 
     if (!isAvailableUpdates) {
-        throw new Error(`Some fields are not allowed to be updated ${data}`);
+        throw new Error(`Some fields are not allowed to be updated ${JSON.stringify(data)}`);
     }
 }
 
@@ -238,7 +251,7 @@ function validateNote(data) {
     const isAvailableUpdates = updates.every((update) => allowedNoteUpdated.includes(update));
 
     if (!isAvailableUpdates) {
-        throw new Error(`Some fields are not allowed to be updated ${data}`);
+        throw new Error(`Some fields are not allowed to be updated ${JSON.stringify(data)}`);
     }
 }
 
@@ -251,7 +264,8 @@ module.exports = Object.assign({}, {
     doDelete,
     doAddNote,
     doUpdateNote,
-    doDeleteNote
+    doDeleteNote,
+    doCompleteNote
 });
 
 
