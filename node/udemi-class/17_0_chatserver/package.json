@@ -4,13 +4,20 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon start"
+    "dev": "nodemon server.js",
+    "start": "node server.js",
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bad-words": "^3.0.2",
     "express": "^4.17.1",
-    "nodemon": "^1.19.1"
+    "hbs": "^4.0.4",
+    "socket.io": "^2.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1",
+    "jest": "^24.8.0"
   }
 }
