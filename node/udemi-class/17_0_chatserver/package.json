@@ -14,10 +14,12 @@
     "bad-words": "^3.0.2",
     "express": "^4.17.1",
     "hbs": "^4.0.4",
-    "socket.io": "^2.2.0"
+    "node-cache": "^4.2.0",
+    "socket.io": "^2.2.0",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
-    "nodemon": "^1.19.1",
-    "jest": "^24.8.0"
+    "jest": "^24.8.0",
+    "nodemon": "^1.19.1"
   }
 }

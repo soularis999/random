@@ -22,6 +22,10 @@ socket.on("message", (message) => {
     renderResult(message);
 });
 
+socket.on("message-replay", (messages) => {
+    messages.reverse().forEach(renderResult)
+})
+
 socket.on("users", ({roomName, users}) => {
     document.querySelector(".room-title").innerHTML = roomName
     var ulNode = document.querySelector(".users")

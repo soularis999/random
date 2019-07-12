@@ -7,7 +7,8 @@ const Filter = require('bad-words')
 const hbs = require('hbs')
 const {
     generateDataMessage,
-    generateTextMessage,
+    getStoredMessages,
+    genearateProfaneMessage,
     generateNewUserNotificationMessage, 
     generateNewUserWelcomeMessage,
     generateUserLeftMessage
@@ -47,7 +48,10 @@ async function join({userName, roomName}, callback) {
             users: getUsersInRoom(user.roomName)
         })
 
-        callback(generateNewUserWelcomeMessage(user))
+        await callback(generateNewUserWelcomeMessage(user))
+        
+        let messages = await getStoredMessages(user.roomName)
+        this.emit('message-replay', messages)
     } catch(e) {
         console.log("ERROR,USER_JOIN,", id, userName, roomName, e);
         return callback({ e })
@@ -76,11 +80,11 @@ async function submitMessage(data, callback) {
         console.log("Submit message: ", data)
         let filter = new Filter()
         if(filter.isProfane(data.message)) {
-            return await callback(generateTextMessage("Profane message not allowed!"))
+            return await callback(genearateProfaneMessage())
         }
 
         let user = getUser(this.id)
-        let message = generateDataMessage(data, user);
+        let message = await generateDataMessage(data, user);
         console.log("MESSAGE,",message, user)
         await sio.to(user.roomName).emit("message", message)
         return callback()
