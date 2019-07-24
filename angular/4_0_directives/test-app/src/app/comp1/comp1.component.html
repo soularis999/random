@@ -1,0 +1,11 @@
+<p>comp1 works!</p>
+<ul>
+  <li *ngFor="let item of data; let counter = index"
+  [ngStyle]="{fontStyle: 0 === counter % 2 ? 'italic' : 'unset'}"
+  [textContent]="item"></li>
+</ul>
+<input type="text" [(ngModel)]="temp" />
+<button type="button" (click)="onAdd()"
+[ngClass]="{'btn': temp !== '', 'btn-gray' : temp === ''}">Add</button>
+
+<p *ngIf="temp === ''">Please add correct data!</p>
