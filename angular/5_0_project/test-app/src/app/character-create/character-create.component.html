@@ -1,0 +1,25 @@
+<!--
+  The ngForm allows exposing the form control to angular
+-->
+<form (submit)="onSubmit(formCtrl)" #formCtrl="ngForm">
+  <div class="form-group">
+    <label for="name">Character name</label>
+    <!--
+      Name control has following extra tags
+      1. required - html tag to validate form
+      2. ngModel - to expose the control to angular parser
+      3. #nameCtrl="ngModel" to define a parameter nameCtrl that
+      can be used in the template
+    -->
+    <input type="text" id="name" name="name" class="form-control"
+    ngModel required #nameCtrl="ngModel">
+    <span class="help-block" *ngIf="nameCtrl.invalid && nameCtrl.touched">Please add name</span>
+  </div>
+  <div class="form-group">
+    <label for="name">Choose side</label>
+    <select name="side" id="side" class="form-control" ngModel>
+      <option *ngFor="let side of sides" [value]="side.value">{{side.displayValue}}</option>
+    </select>
+  </div>
+  <button type="submit"  class="btn btn-primary" [disabled]="formCtrl.invalid">Submit</button>
+</form>

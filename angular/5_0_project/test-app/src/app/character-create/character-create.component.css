@@ -1,0 +1,4 @@
+/* The .ng-invalid is provided by angular forms */
+input.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
