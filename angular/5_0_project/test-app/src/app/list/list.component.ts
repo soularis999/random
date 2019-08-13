@@ -9,12 +9,12 @@ import { Subscription } from 'rxjs/Subscription';
   styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit, OnDestroy {
- characters = [];
- activatedRoute: ActivatedRoute;
- userService: UserService;
- loadedSide = 'all';
+  characters = [];
+  activatedRoute: ActivatedRoute;
+  userService: UserService;
+  loadedSide = 'all';
 
- userServiceSubscription: Subscription;
+  userServiceSubscription: Subscription;
 
   constructor(activatedRoute: ActivatedRoute, userService: UserService) {
     this.activatedRoute = activatedRoute;
@@ -28,15 +28,16 @@ export class ListComponent implements OnInit, OnDestroy {
         the observable is used to callback on parse;
         the side in params is the same name we defined in route definition in module
         */
-       console.log(params);
+        console.log(params);
+
         this.characters = this.userService.getCharacters(params.side);
         this.loadedSide = params.side;
       },
-      (error) => {},
+      (error) => { },
       /*
       onEnd
       */
-      () => {}
+      () => { }
     );
 
     /*
@@ -46,7 +47,7 @@ export class ListComponent implements OnInit, OnDestroy {
       () => {
         this.characters = this.userService.getCharacters(this.loadedSide);
       }
-    )
+    );
   }
 
   /*
