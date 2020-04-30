@@ -12,6 +12,8 @@ import { ListComponent } from './list/list.component';
 import { TabComponent } from './tab/tab.component';
 import { AppRoutingModule  } from './app-routing.module';
 import { CreateCharacterModule } from './character-create/character-create.module';
+import { ErrorComponent } from './error/error.component';
+import { ResultComponent } from './result/result.component';
 
 
 
@@ -24,7 +26,9 @@ import { CreateCharacterModule } from './character-create/character-create.modul
     ItemComponent,
     NavigationComponent,
     ListComponent,
-    TabComponent
+    TabComponent,
+    ErrorComponent,
+    ResultComponent
   ],
   /*
   Modules - FormsModule allows different functionality to work
