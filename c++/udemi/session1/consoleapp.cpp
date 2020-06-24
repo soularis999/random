@@ -22,8 +22,5 @@ int main(int argc, char * argv[]) {
 
   std::cout << (x == y) << std::endl;
   std::cout << (*x == *y) << std::endl;
-  std::cout << (0 == strcmp(x,y))  << std::endl; // return 0 for equals or -1 / 1 for not
-
-  std::string a = *x;
-  
+  std::cout << (0 == strcmp(x,y))  << std::endl; // return 0 for equals or -1 / 1 for not  
 }

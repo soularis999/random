@@ -10,3 +10,6 @@ node_modules/
 .vertx/
 .gradle/
 package-lock.json
+
+.vscode/
+*.dSYM/

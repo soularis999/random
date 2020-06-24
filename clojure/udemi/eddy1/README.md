@@ -1,4 +1,4 @@
-# proj1
+# eddy1
 
 FIXME: description
 
@@ -10,7 +10,7 @@ Download from http://example.com/FIXME.
 
 FIXME: explanation
 
-    $ java -jar proj1-0.1.0-standalone.jar [args]
+    $ java -jar eddy1-0.1.0-standalone.jar [args]
 
 ## Options
 

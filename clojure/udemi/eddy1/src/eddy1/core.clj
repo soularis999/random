@@ -1,4 +1,4 @@
-(ns proj1.core
+(ns eddy1.core
   (:gen-class))
 
 (defn -main
