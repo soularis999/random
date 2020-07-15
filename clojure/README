@@ -1,0 +1,176 @@
+Lesson 1:
+using leinengen
+
+lein new test123
+will create a library with name test123 - difference is that there will be no main method project
+
+lein new app test123
+will create a new application with main method
+
+lein repl
+will start the repl based on config of the project if done in project
+
+project.clj has dependencies that can be added
+
+Lesson 2:
+
+types available:
+lists, maps, vectors
+ints, floats, fractions
+
+define variable
+(def x 1)
+will result in x = 1
+
+define function
+(defn ff[x] (* x x))
+will define function that squares it's variables
+
+(* 1 2)
+will multiply 1 * 2
+
+the list () is also an execution
+
+useful functions:
+range - creates a range from x to y
+# (range 1 5) will create a list of 1 2 3 4
+
+map - maps the returned iterator of one function into another
+(map square (range 1 5)) will square every element of range
+
+cons - creates a list given a required value and vector of optional, additional values
+# (cons 1 [2 3]) will create a list of (1 2 3)
+# (cons 1 `(2 3)) will create a list of (1 2 3) as well because the secondary list was quoted
+
+data structures
+list - (1 2 3) - everything in closure is a list. The list has to be evaluated as a form
+one way to treat list as literal is to use `
+`(1 2 3) will produce a list without evaluating it's values
+
+vector - [1 2 3] - like list but does not need to be evaluated
+
+map - { 1 "one, 2 "two", 3 "three"}
+
+set - #{1 2 3 "a" 'b' 'c'} - striktly checks to make sure there are no dups and throws error
+
+# Examples:
+(def mymap {:firstKey "test1, :secondKey "test2")
+will define the map
+
+(str "test " (:firstKey mymap))
+will produce a string of "test test1"
+
+(apply str mymap)
+will apply str to every key / value in map
+
+##### macros ########
+the functions may have assigned macros
+Thread first macro
+(-> 3 (str [1 2]))
+will append 3 to beginning of the string for 1 2
+Thread last macro
+(->> 3 (str [1 2]))
+will append in the end
+#### larger example ###########
+
+//--> define new makeTable function that applies format
+(defn makeTable [tableRow]
+(apply format "%-30s|%-30s|%-30s" tableRow))
+//--> define header
+(def header ["First", "Second", "Third"])
+//--> define rows
+(def rows [["1.1", "1.2", "1.3"] ["2.1", "2.2", "2.3"]])
+//--> process:
+//--> reason for header been in vector is because rows is two dimentional array - we need to maintain a two dimentional array
+//--> reason for ->> macro is to chain the functions together - otherwise teh data will not pass between them
+(->> (concat [header] rows) (map makeTable) (map println))
+
+######## immutability ###########
+Datastructures in closure are immutable
+(list 1 2 3)
+will create a list of (1,2,3)
+
+add items will create a new list
+(conj '(1 2 3) 4 5)
+will create a new list (5 4 1 2 3) by adding to head
+(pop '(1 2 3 4 5))
+will create (2 3 4 5)
+
+######### conditional macros ###############
+(when (= 2 (+ 1 1))(print "yey") (print "no"))
+works like if
+(when-not (empty? x) (println "ok) :ok)
+
+other type of if
+(if (empty? x)
+    "is not empty"
+    "is empty")
+
+
+(if-not (...))
+
+(case 
+    "Goodbuy" :goodbuy
+    "Hello"   :hello)
+
+(cond
+  (= x "Goodbuy) :goodbuy
+  (= (reverse x) "olleH") :olleh
+  :otherwise :nothing)
+
+
+  
+
+
+######### creating lambda function - annonimous function ###############
+(filter #(even? %) (range 10))
+filter takes a function to evluate each value and range
+#() is an annonimous function
+% is a parameter of that function
+
+######## map reduce #############
+(map * % [1 2 3] [2 3 4])
+map product function to each element in vector
+(#(map * % %2 %3) [1 2 3] [2 3 4] [3 4 5])
+map multiple array elements to product function a * b * c
+
+(reduce + 50 [1 2 3 4])
+adds all elements in vector to 50
+
+(#(filter string? %) ["a" 3 "5"])
+
+####### define function literal - the function that is used right away ##############
+((fn [x y] #{x y}) 1 2)
+will return a set of #{1 2}
+
+####### define a variable bound to function ###################
+(def make-a-set
+    (fn ([x] #{x})
+        ([x y] #{x y})))
+
+makes a function that can take one or two arguments and return a set
+defn is a macro that combines def and fn together
+(defn make-a-set
+;; takes either one or two values
+([x] #{x})
+([x y] #{x y}))
+
+############### simple loop ######################
+(doseq [x (range 2)] (println x))
+will print range of 1 2
+
+(dosec [[x y] (map list [1 2 3] [2 3 4])]
+(prn (format "%s | %s" x y))
+
+will print
+"1 | 2"
+"2 | 3"
+"3 | 4"
+
+(dotimes [j 3] (println j))
+will print from 0 to 3
+
+############# veriadic functions - the functions with var args #################
+(defn var-func [x & rest] (apply list x rest))
+
+############ partial ######################
