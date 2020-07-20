@@ -87,8 +87,8 @@
     )
 )
 
-(defn findrowandcol
-  ([grid] (findrowandcol grid (findrow grid)))
+(defn find-row-and-col
+  ([grid] (find-row-and-col grid (findrow grid)))
   ([grid rowid] (first 
                  (keep-indexed #(when (zero? %2) (list rowid %1)) (getrow grid rowid)))
    )
@@ -100,10 +100,12 @@
 )
 
 (defn run_inc [grid fn]
-  (let [rowandcol (findrowandcol grid) row (first rowandcol) col (last rowandcol)]
+  "The function is responsible for looping through every value from 1..9, validating that 
+the grid is valid and calling the run method recursively again with new grid. if run method returns null
+than this method reverts to previous grid and tries next value for that position"
+  (let [[row col] (find-row-and-col grid)]
     (loop [val 1]
       (let [new-grid (generate-new-grid grid row col val) temp (fn new-grid)]
-        ;; (println val rowandcol new-grid)
         (if (and (< val 9) (nil? temp))
           (recur (inc val))
             temp
@@ -125,5 +127,5 @@
 (defn -main
   [& args]
   (println "Hello sudoku")
-  ;; (println (run grid))
+  (println (run grid))
 )
